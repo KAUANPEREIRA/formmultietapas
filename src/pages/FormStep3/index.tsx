@@ -1,5 +1,10 @@
+import { Theme } from "../../components/Theme";
 import * as C from "./style";
 
 export const FormStep3 = () => {
-  return <C.Container>Passo 3</C.Container>;
+  return (
+    <Theme>
+      <C.Container>Passo 3</C.Container>
+    </Theme>
+  );
 };

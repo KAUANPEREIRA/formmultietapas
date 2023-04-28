@@ -1,5 +1,11 @@
+import { FormProvider } from "./contexts/FormContext";
+import { Router } from "./router";
 const App = () => {
-  return <div>Um dia vai chegar o dia </div>;
+  return (
+    <FormProvider>
+      <Router />
+    </FormProvider>
+  );
 };
 
 export default App;
