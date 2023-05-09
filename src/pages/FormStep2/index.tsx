@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SelectOption } from "../../components/SelectOption";
 import { Theme } from "../../components/Theme";
 import { FormActions, useForm } from "../../contexts/FormContext";
@@ -16,10 +16,6 @@ export const FormStep2 = () => {
     }
   };
 
-  const handlePrevtStep = () => {
-    navigate("/");
-  };
-
   //funccao que altera nome no contexto utilzando o hook com reducer
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,30 +26,50 @@ export const FormStep2 = () => {
   };
 
   useEffect(() => {
-    dispatch({
-      type: FormActions.setCurrentStep,
-      payload: 2,
-    });
+    if (state.name === "") {
+      navigate("/");
+    } else {
+      dispatch({
+        type: FormActions.setCurrentStep,
+        payload: 2,
+      });
+    }
   }, []);
+
+  const setLevel = (level: number) => {
+    dispatch({
+      type: FormActions.setLevel,
+      payload: level,
+    });
+  };
   return (
     <Theme>
       <C.Container>
         <p>Passo 2/3</p>
-        <h1>Vamos começar com seu nome : </h1>
-        <p>Preencha o campo abaixo com seu nome completo.</p>
-        <hr></hr>
+        <h1>{state.name} Oque melhor descreve você: </h1>
+        <p>Escolha a opçaõ que condiz seu status atual profissionalmente</p>
+        {/* <hr></hr> */}
         <SelectOption
           title="Sou iniciante"
           description="Comecei a programar há menos de 2 anos"
           icon="🥳"
+          selected={state.level === 0}
+          onClick={() => setLevel(0)}
         />
         <SelectOption
           title="Sou programador"
           description="Ja programao há dois anos ou mais"
           icon="😎"
+          selected={state.level === 1}
+          onClick={() => setLevel(1)}
         />
-        <button onClick={handlePrevtStep}>Anterior</button>
-        <button onClick={handleNextStep}>Proximo</button>
+
+        {/* <button onClick={handlePrevtStep}>Anterior</button> */}
+        <Link to="/">Voltar</Link>
+
+        <button style={{ marginLeft: "20px" }} onClick={handleNextStep}>
+          Proximo
+        </button>
       </C.Container>
     </Theme>
   );
